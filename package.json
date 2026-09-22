@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "react": "^19.2.7"
+  },
+  "scripts": {
+    "dev": "npm --prefix e-commerce run dev"
   }
 }

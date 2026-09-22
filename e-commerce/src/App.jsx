@@ -1,7 +1,16 @@
 import './App.css'
 import products from './phone-products/products.json'
+import { useState, useEffect } from 'react'
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Autoplay } from "swiper/modules"
+import React from 'react'
+
+
 
 function App() {
+  const numberOfSlides = 7
+  const [swiper, setSwiper] = useState(null)
+  const [activeIndex, setActiveIndex] = useState(0)
 
 
   return (
@@ -16,14 +25,14 @@ function App() {
             <div className="mega-mart-actions">
 
               <div className="delivery">
-                <img src="/assets/Icons/Location.png" alt="Location" />
+                <img src="/assets/Pictures/Category/Icons/Location.png" alt="Location" />
                 <p>
                   Deliver to <span>423651</span>
                 </p>
               </div>
 
               <div className="order">
-                <img src="/assets/Icons/Delivery-truck.png" alt="Delivery truck" />
+                <img src="/assets/Pictures/Category/Icons/Delivery-truck.png" alt="Delivery truck" />
                 <p>
                   Track your order
                 </p>
@@ -154,48 +163,67 @@ function App() {
                 <img className="view-all-arrow" src="/assets/Pictures/Category/Icons/Arrow-Right.png" alt="" />
               </a>
             </div>
+            <div className="product-container">
+              <Swiper className="product-grid"
+                slidesPerView={1}
+                autoplay={{
+                  delay: 2000
+                }}
+                onSwiper={setSwiper}
+                modules={[Autoplay]}
+                onSlideChange={(swiperInstance) => {
+                  setActiveIndex(swiperInstance.activeIndex);
+                }}
+              >
+                {
+                  Array.from({ length: numberOfSlides }).map((_, index) => (
+                    <SwiperSlide key={index} className="product-slide">
+                      {
+                        products.phones.samsung.map((product) => (
+                          <div className='product-card-wrapper'>
+                            <div className="product-card">
+                              <div className="product-image-wrapper">
+                                <div className="discount-badge">
+                                  <p>56%</p>
+                                  <p>OFF</p>
+                                </div>
 
-            <div className="product-grid">  {
-              products.phones.samsung.map((product) => (
+                                <img className="product-image" src={product.img}
+                                  alt="" />
+                              </div>
 
-                <div className="product-card">
-                  <div className="product-image-wrapper">
-                    <div className="discount-badge">
-                      <p>56%</p>
-                      <p>OFF</p>
-                    </div>
+                              <div className="product-info">
+                                <h3>{product.model}</h3>
 
-                    <img className="product-image" src={product.img}
-                      alt="" />
-                  </div>
+                                <p className="product-price">
+                                  ₹{product.price}
+                                  <span className="original-price">₹{product.oldPrice}</span>
+                                </p>
 
-                  <div className="product-info">
-                    <h3>{product.model}</h3>
+                                <p className="product-saving">
+                                  Save - ₹{product.save}
+                                </p>
+                              </div>
+                            </div>
 
-                    <p className="product-price">
-                      ₹{product.price}
-                      <span className="original-price">₹{product.oldPrice}</span>
-                    </p>
-
-                    <p className="product-saving">
-                      Save - ₹{product.save}
-                    </p>
-                  </div>
-                </div>
-
-
-              ))
-            }
+                          </div>
+                        ))
+                      }
+                    </SwiperSlide>
+                  ))
+                }
+              </Swiper>
             </div>
-
             <div className="product-slider">
-              <button className="slider-button"></button>
-              <button className="slider-button"></button>
-              <button className="slider-button"></button>
-              <button className="slider-button"></button>
-              <button className="slider-button"></button>
-              <button className="slider-button"></button>
-              <button className="slider-button"></button>
+              {Array.from({ length: numberOfSlides }).map((_, index) => (
+                < button
+                  className={`slider-button ${swiper?.activeIndex === index ? "blue" : ""} `}
+                  key={index}
+                  onClick={() => swiper?.slideTo(index)
+                  }
+                ></button>
+              ))
+              }
             </div>
           </div>
         </section>
@@ -219,8 +247,7 @@ function App() {
 
             <a href="#" className="category-card">
               <div className="category-image-wrapper">
-                <img className="category-image" src="/assets/Pictures/Category/Technology/Galaxy-S22-Ultra.png"
-                  alt="" />
+                <img className="category-image" src="/assets/Pictures/Category/Technology/Galaxy-S22-Ultra.png" alt="" />
               </div>
 
               <p>Mobile</p>
@@ -236,7 +263,7 @@ function App() {
 
             <a href="#" className="category-card">
               <div className="category-image-wrapper">
-                <img className="category-image" src="/assets/Pictures/Category/Technology/Multiple-Phones.png"
+                <img className="category-image" src="/assets/Pictures/Category/Technology/Electronics.png"
                   alt="" />
               </div>
 
@@ -345,6 +372,7 @@ function App() {
               <img className="brand-background-circle" src="/assets/Pictures/Category/Circles/Peach-Color-Circle.png"
                 alt="" />
             </a>
+
           </div>
         </section>
 
@@ -416,7 +444,7 @@ function App() {
           </div>
 
         </section>
-      </main>
+      </main >
 
       <footer className="footer-content">
 
