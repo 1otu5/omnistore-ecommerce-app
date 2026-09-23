@@ -1,17 +1,19 @@
 import './App.css'
 import products from './phone-products/products.json'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Autoplay } from "swiper/modules"
-import React from 'react'
+
 
 
 
 function App() {
   const numberOfSlides = 7
+  const heroBannerSlides = 3
+
   const [swiper, setSwiper] = useState(null)
   const [activeIndex, setActiveIndex] = useState(0)
-
+  const [heroSwiper, setHeroSwiper] = useState(null)
 
   return (
     <>
@@ -122,31 +124,50 @@ function App() {
         </section>
       </header>
       <main>
-        <section className="hero-banner">
-          <div className="hero-slide">
-            <div className="hero-text">
-              <h2>Best Deal Online on smart watches</h2>
-              <p>SMART WEARABLE.</p>
-              <p>UP to 80% OFF</p>
-            </div>
+        <section className='hero-banner-section'>
+          <div className="hero-banner-wrapper">
+            <Swiper className="hero-banner"
+              onSwiper={setHeroSwiper}
+              loop={true}
+              modules={[Autoplay]}
+              autoplay={{ delay: 2000 }}
+            >
+              {Array.from({ length: heroBannerSlides }).map((_, index) => (
+                <SwiperSlide className="hero-slide"
+                  key={index}
+                >
+                  <div className="hero-text">
+                    <h2>Best Deal Online on smart watches</h2>
+                    <p>SMART WEARABLE.</p>
+                    <p>UP to 80% OFF</p>
+                  </div>
 
-            <img className="hero-product-image" src="/assets/Pictures/Category/Technology/Smart-Watch.png"
-              alt="Smart Watch" />
+                  <img className="hero-product-image" src="/assets/Pictures/Category/Technology/Smart-Watch.png"
+                    alt="Smart Watch" />
 
-            <img className="circle-bottom" src="/assets/Pictures/Category/Circles/Circle-DarkBlue-Bottom.png" alt="" />
-            <img className="circle-top" src="/assets/Pictures/Category/Circles/Circle-DarkBlue-Top.png" alt="" />
-
-
-            <button className="arrow-right">
-              <img src="/assets/Pictures/Category/Icons/Arrow-Right.png" alt="" />
-            </button>
+                  <img className="circle-bottom" src="/assets/Pictures/Category/Circles/Circle-DarkBlue-Bottom.png" alt="" />
+                  <img className="circle-top" src="/assets/Pictures/Category/Circles/Circle-DarkBlue-Top.png" alt="" />
 
 
 
-            <button className="arrow-left">
-              <img src="/assets/Pictures/Category/Icons/Arrow-Left.png" alt="" />
-            </button>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
           </div>
+          <button className="arrow-right"
+            onClick={() => heroSwiper?.slideNext()}
+          >
+            <img src="/assets/Pictures/Category/Icons/Arrow-Right.png" alt="" />
+          </button>
+
+
+
+          <button className="arrow-left"
+            onClick={() => heroSwiper?.slidePrev()}
+          >
+            <img src="/assets/Pictures/Category/Icons/Arrow-Left.png" alt="" />
+          </button>
         </section>
 
         <section className="product-section">
