@@ -1,10 +1,8 @@
-import './App.css'
-import products from './phone-products/products.json'
-import { useState } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay } from 'swiper/modules'
-
-const categoryAssets = '/assets/pictures/category'
+import "./App.css"
+import { useState, useEffect } from "react"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Autoplay } from "swiper/modules"
+import products from "./services/api"
 
 function App() {
   const numberOfSlides = 7
@@ -12,10 +10,20 @@ function App() {
 
   const [swiper, setSwiper] = useState(null)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [product, setProduct] = useState([])
   const [heroSwiper, setHeroSwiper] = useState(null)
 
+
+  useEffect(() => {
+    async function getProducts() {
+      const response = await products()
+      setProduct(response)
+    }
+    getProducts()
+  }, [])
   return (
     <>
+
       <header>
         <div className="mega-mart-wrapper">
           <div className="mega-mart">
@@ -23,14 +31,14 @@ function App() {
 
             <div className="mega-mart-actions">
               <div className="delivery">
-                <img src={`${categoryAssets}/icons/location.png`} alt="Location" />
+                <img src={"/assets/pictures/category/icons/location.png"} alt="Location" />
                 <p>
                   Deliver to <span>423651</span>
                 </p>
               </div>
 
               <div className="order">
-                <img src={`${categoryAssets}/icons/delivery-truck.png`} alt="Delivery truck" />
+                <img src={"/assets/pictures/category/icons/delivery-truck.png"} alt="Delivery truck" />
                 <p>Track your order</p>
               </div>
 
@@ -44,25 +52,25 @@ function App() {
         <section className="header">
           <div className="logo-block">
             <div className="icon-box">
-              <img src={`${categoryAssets}/icons/open-list.png`} alt="Menu" />
+              <img src="/assets/pictures/category/icons/open-list.png" alt="Menu" />
             </div>
             <h1>MegaMart</h1>
           </div>
 
           <div className="header-actions">
             <div className="search-block">
-              <img className="search-icon" src={`${categoryAssets}/icons/search.png`} alt="Search" />
+              <img className="search-icon" src="/assets/pictures/category/icons/search.png" alt="Search" />
               <input type="text" placeholder="Search essentials, groceries and more..." />
-              <img className="suggestions" src={`${categoryAssets}/icons/list.png`} alt="Suggestions" />
+              <img className="suggestions" src="/assets/pictures/category/icons/list.png" alt="Suggestions" />
             </div>
 
             <div className="authentication">
-              <img src={`${categoryAssets}/icons/user.png`} alt="User" />
+              <img src="/assets/pictures/category/icons/user.png" alt="User" />
               <a href="">Sign Up/Sign In</a>
             </div>
 
             <div className="items-in-cart">
-              <img src={`${categoryAssets}/icons/cart.png`} alt="Cart" />
+              <img src="/assets/pictures/category/icons/cart.png" alt="Cart" />
               <a href="">Cart</a>
             </div>
           </div>
@@ -82,7 +90,7 @@ function App() {
             ].map((label) => (
               <div className="category-item" key={label}>
                 <button className="category-button">{label}</button>
-                <img className="category-arrow" src={`${categoryAssets}/icons/arrow-down.png`} alt="" />
+                <img className="category-arrow" src="/assets/pictures/category/icons/arrow-down.png" alt="" />
               </div>
             ))}
           </nav>
@@ -101,20 +109,20 @@ function App() {
                     <p>UP to 80% OFF</p>
                   </div>
 
-                  <img className="hero-product-image" src={`${categoryAssets}/technology/smart-watch.png`} alt="Smart Watch" />
-                  <img className="circle-bottom" src={`${categoryAssets}/circles/circle-darkblue-bottom.png`} alt="" />
-                  <img className="circle-top" src={`${categoryAssets}/circles/circle-darkblue-top.png`} alt="" />
+                  <img className="hero-product-image" src="/assets/pictures/category/technology/smart-watch.png" alt="Smart Watch" />
+                  <img className="circle-bottom" src="/assets/pictures/category/circles/circle-darkblue-bottom.png" alt="" />
+                  <img className="circle-top" src="/assets/pictures/category/circles/circle-darkblue-top.png" alt="" />
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
 
           <button className="arrow-right" onClick={() => heroSwiper?.slideNext()}>
-            <img src={`${categoryAssets}/icons/arrow-right.png`} alt="" />
+            <img src="/assets/pictures/category/icons/arrow-right.png" alt="" />
           </button>
 
           <button className="arrow-left" onClick={() => heroSwiper?.slidePrev()}>
-            <img src={`${categoryAssets}/icons/arrow-left.png`} alt="" />
+            <img src="/assets/pictures/category/icons/arrow-left.png" alt="" />
           </button>
         </section>
 
@@ -128,7 +136,7 @@ function App() {
 
               <a href="" className="view-all-link">
                 View All
-                <img className="view-all-arrow" src={`${categoryAssets}/icons/arrow-right.png`} alt="" />
+                <img className="view-all-arrow" src="/assets/pictures/category/icons/arrow-right.png" alt="" />
               </a>
             </div>
 
@@ -145,8 +153,8 @@ function App() {
               >
                 {Array.from({ length: numberOfSlides }).map((_, index) => (
                   <SwiperSlide key={index} className="product-slide">
-                    {products.phones.samsung.map((product) => (
-                      <div className="product-card-wrapper" key={product.model}>
+                    {product.map((product) => (
+                      <div className="product-card-wrapper" key={product.id}>
                         <div className="product-card">
                           <div className="product-image-wrapper">
                             <div className="discount-badge">
@@ -154,18 +162,18 @@ function App() {
                               <p>OFF</p>
                             </div>
 
-                            <img className="product-image" src={product.img} alt="" />
+                            <img className="product-image" src={product.image_src} alt="" />
                           </div>
 
                           <div className="product-info">
-                            <h3>{product.model}</h3>
+                            <h3>{product.product_name}</h3>
 
                             <p className="product-price">
                               ₹{product.price}
-                              <span className="original-price">₹{product.oldPrice}</span>
+                              <span className="original-price">₹{product.old_price}</span>
                             </p>
 
-                            <p className="product-saving">Save - ₹{product.save}</p>
+                            <p className="product-saving">Save - ₹{product.old_price - product.price}</p>
                           </div>
                         </div>
                       </div>
@@ -196,56 +204,56 @@ function App() {
 
             <a href="" className="view-all-link">
               View All
-              <img className="view-all-arrow" src={`${categoryAssets}/icons/arrow-right.png`} alt="" />
+              <img className="view-all-arrow" src="/assets/pictures/category/icons/arrow-right.png" alt="" />
             </a>
           </div>
 
           <nav className="categories-grid">
             <a href="#" className="category-card">
               <div className="category-image-wrapper">
-                <img className="category-image" src={`${categoryAssets}/technology/galaxy-s22-ultra.png`} alt="" />
+                <img className="category-image" src="/assets/pictures/category/technology/galaxy-s22-ultra.png" alt="" />
               </div>
               <p>Mobile</p>
             </a>
 
             <a href="#" className="category-card">
               <div className="category-image-wrapper">
-                <img className="category-image" src={`${categoryAssets}/other/cream.png`} alt="" />
+                <img className="category-image" src="/assets/pictures/category/other/cream.png" alt="" />
               </div>
               <p>Cosmetics</p>
             </a>
 
             <a href="#" className="category-card">
               <div className="category-image-wrapper">
-                <img className="category-image" src={`${categoryAssets}/technology/electronics.png`} alt="" />
+                <img className="category-image" src="/assets/pictures/category/technology/electronics.png" alt="" />
               </div>
               <p>Electronics</p>
             </a>
 
             <a href="#" className="category-card">
               <div className="category-image-wrapper">
-                <img className="category-image" src={`${categoryAssets}/other/sofa.png`} alt="" />
+                <img className="category-image" src="/assets/pictures/category/other/sofa.png" alt="" />
               </div>
               <p>Furniture</p>
             </a>
 
             <a href="#" className="category-card">
               <div className="category-image-wrapper">
-                <img className="category-image" src={`${categoryAssets}/technology/smart-watch-small.png`} alt="" />
+                <img className="category-image" src="/assets/pictures/category/technology/smart-watch-small.png" alt="" />
               </div>
               <p>Watches</p>
             </a>
 
             <a href="#" className="category-card">
               <div className="category-image-wrapper">
-                <img className="category-image" src={`${categoryAssets}/other/plant.png`} alt="" />
+                <img className="category-image" src="/assets/pictures/category/other/plant.png" alt="" />
               </div>
               <p>Decor</p>
             </a>
 
             <a href="#" className="category-card">
               <div className="category-image-wrapper">
-                <img className="category-image" src={`${categoryAssets}/other/necklace.png`} alt="" />
+                <img className="category-image" src="/assets/pictures/category/other/necklace.png" alt="" />
               </div>
               <p>Accessories</p>
             </a>
@@ -261,33 +269,33 @@ function App() {
 
             <a href="" className="view-all-link">
               View All
-              <img className="view-all-arrow" src={`${categoryAssets}/icons/arrow-right.png`} alt="" />
+              <img className="view-all-arrow" src="/assets/pictures/category/icons/arrow-right.png" alt="" />
             </a>
           </div>
 
           <div className="phone-brands">
             <a href="#" className="brand-card apple-card">
               <div className="phone-brand apple-brand">IPHONE</div>
-              <img className="brand-logo" src={`${categoryAssets}/logos/apple-logo.png`} alt="apple" />
+              <img className="brand-logo" src="/assets/pictures/category/logos/apple-logo.png" alt="apple" />
               <p>UP to 80% OFF</p>
-              <img className="brand-product-image" src={`${categoryAssets}/technology/apple.png`} alt="" />
-              <img className="brand-background-circle" src={`${categoryAssets}/circles/black-circle.png`} alt="" />
+              <img className="brand-product-image" src="/assets/pictures/category/technology/apple.png" alt="" />
+              <img className="brand-background-circle" src="/assets/pictures/category/circles/black-circle.png" alt="" />
             </a>
 
             <a href="#" className="brand-card realme-card">
               <div className="phone-brand realme-brand">REALME</div>
-              <img className="brand-logo" src={`${categoryAssets}/logos/realme-logo.png`} alt="realme" />
+              <img className="brand-logo" src="/assets/pictures/category/logos/realme-logo.png" alt="realme" />
               <p>UP to 80% OFF</p>
-              <img className="brand-product-image" src={`${categoryAssets}/technology/realme.png`} alt="" />
-              <img className="brand-background-circle" src={`${categoryAssets}/circles/pale-yellow-circle.png`} alt="" />
+              <img className="brand-product-image" src="/assets/pictures/category/technology/realme.png" alt="" />
+              <img className="brand-background-circle" src="/assets/pictures/category/circles/pale-yellow-circle.png" alt="" />
             </a>
 
             <a href="#" className="brand-card xiaomi-card">
               <div className="phone-brand xiaomi-brand">XIAOMI</div>
-              <img className="brand-logo" src={`${categoryAssets}/logos/xiaomi-logo.png`} alt="xiaomi" />
+              <img className="brand-logo" src="/assets/pictures/category/logos/xiaomi-logo.png" alt="xiaomi" />
               <p>UP to 80% OFF</p>
-              <img className="brand-product-image" src={`${categoryAssets}/technology/xiaomi-black.png`} alt="" />
-              <img className="brand-background-circle" src={`${categoryAssets}/circles/peach-color-circle.png`} alt="" />
+              <img className="brand-product-image" src="/assets/pictures/category/technology/xiaomi-black.png" alt="" />
+              <img className="brand-background-circle" src="/assets/pictures/category/circles/peach-color-circle.png" alt="" />
             </a>
           </div>
         </section>
@@ -301,14 +309,14 @@ function App() {
 
             <a href="" className="view-all-link">
               View All
-              <img className="view-all-arrow" src={`${categoryAssets}/icons/arrow-right.png`} alt="" />
+              <img className="view-all-arrow" src="/assets/pictures/category/icons/arrow-right.png" alt="" />
             </a>
           </div>
 
           <div className="essentials-grid">
             <a href="#" className="essential-card">
               <div className="essential-image-wrapper">
-                <img className="essential-image" src={`${categoryAssets}/food/products.png`} alt="" />
+                <img className="essential-image" src="/assets/pictures/category/food/products.png" alt="" />
               </div>
               <h3 className="essential-title">Daily Essentials</h3>
               <p className="essential-offer">UP to 50% OFF</p>
@@ -316,7 +324,7 @@ function App() {
 
             <a href="#" className="essential-card">
               <div className="essential-image-wrapper">
-                <img className="essential-image" src={`${categoryAssets}/food/grocery.png`} alt="" />
+                <img className="essential-image" src="/assets/pictures/category/food/grocery.png" alt="" />
               </div>
               <h3 className="essential-title">Daily Essentials</h3>
               <p className="essential-offer">UP to 50% OFF</p>
@@ -324,7 +332,7 @@ function App() {
 
             <a href="#" className="essential-card">
               <div className="essential-image-wrapper">
-                <img className="essential-image" src={`${categoryAssets}/food/fruits.png`} alt="" />
+                <img className="essential-image" src="/assets/pictures/category/food/fruits.png" alt="" />
               </div>
               <h3 className="essential-title">Daily Essentials</h3>
               <p className="essential-offer">UP to 50% OFF</p>
@@ -332,7 +340,7 @@ function App() {
 
             <a href="#" className="essential-card">
               <div className="essential-image-wrapper">
-                <img className="essential-image" src={`${categoryAssets}/food/strawberry.png`} alt="" />
+                <img className="essential-image" src="/assets/pictures/category/food/strawberry.png" alt="" />
               </div>
               <h3 className="essential-title">Daily Essentials</h3>
               <p className="essential-offer">UP to 50% OFF</p>
@@ -340,7 +348,7 @@ function App() {
 
             <a href="#" className="essential-card">
               <div className="essential-image-wrapper">
-                <img className="essential-image" src={`${categoryAssets}/food/mango-fruit.png`} alt="" />
+                <img className="essential-image" src="/assets/pictures/category/food/mango-fruit.png" alt="" />
               </div>
               <h3 className="essential-title">Daily Essentials</h3>
               <p className="essential-offer">UP to 50% OFF</p>
@@ -348,7 +356,7 @@ function App() {
 
             <a href="#" className="essential-card">
               <div className="essential-image-wrapper">
-                <img className="essential-image" src={`${categoryAssets}/food/cherry-fruit.png`} alt="" />
+                <img className="essential-image" src="/assets/pictures/category/food/cherry-fruit.png" alt="" />
               </div>
               <h3 className="essential-title">Daily Essentials</h3>
               <p className="essential-offer">UP to 50% OFF</p>
@@ -358,7 +366,7 @@ function App() {
       </main>
 
       <footer className="footer-content">
-        <img className="blue-circle" src={`${categoryAssets}/circles/blue-circle.png`} alt="" />
+        <img className="blue-circle" src="/assets/pictures/category/circles/blue-circle.png" alt="" />
 
         <div className="footer-columns">
           <div className="footer-column">
@@ -367,7 +375,7 @@ function App() {
 
             <ul className="footer-contact-list">
               <li className="footer-contact-item">
-                <img className="footer-icon" src={`${categoryAssets}/icons/whats-app-outlined.png`} alt="" />
+                <img className="footer-icon" src="/assets/pictures/category/icons/whats-app-outlined.png" alt="" />
                 <div className="footer-contact-text">
                   <p className="footer-contact-label">Whats App</p>
                   <p className="footer-contact-value">+1 202-918-2132</p>
@@ -375,7 +383,7 @@ function App() {
               </li>
 
               <li className="footer-contact-item">
-                <img className="footer-icon" src={`${categoryAssets}/icons/call.png`} alt="" />
+                <img className="footer-icon" src="/assets/pictures/category/icons/call.png" alt="" />
                 <div className="footer-contact-text">
                   <p className="footer-contact-label">Call Us</p>
                   <p className="footer-contact-value">+1 202-918-2132</p>
@@ -387,10 +395,10 @@ function App() {
 
             <div className="footer-app-links">
               <a href="#" className="footer-app-link">
-                <img src={`${categoryAssets}/icons/app-store.png`} alt="" />
+                <img src="/assets/pictures/category/icons/app-store.png" alt="" />
               </a>
               <a href="#" className="footer-app-link">
-                <img src={`${categoryAssets}/icons/google-play.png`} alt="" />
+                <img src="/assets/pictures/category/icons/google-play.png" alt="" />
               </a>
             </div>
           </div>

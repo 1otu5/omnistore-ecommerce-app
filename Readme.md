@@ -8,3 +8,14 @@
 ## Notes
 - Use Live Server for fetch()
 - No installation needed
+
+## How to run
+
+### install packages
+npm install
+
+### Backend
+npm run backend
+
+### Frontend
+npm run dev
