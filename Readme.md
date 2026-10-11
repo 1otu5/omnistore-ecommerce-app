@@ -11,11 +11,13 @@
 
 ## How to run
 
-### install packages
-npm install
-
 ### Backend
+cd backend
+npm install
 npm run backend
 
 ### Frontend
+cd frontend
+npm install
 npm run dev
+

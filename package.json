@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "npm --prefix e-commerce run dev",
+    "dev": "npm --prefix frontend run dev",
     "backend": "node backend/src/express.js"
   }
 }

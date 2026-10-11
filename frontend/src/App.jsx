@@ -1,4 +1,6 @@
-import "./App.css"
+import "./app.css"
+import Header from "./components/Header/Header"
+import Footer from "./components/Footer/Footer"
 import { useState, useEffect } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Autoplay } from "swiper/modules"
@@ -23,80 +25,7 @@ function App() {
   }, [])
   return (
     <>
-
-      <header>
-        <div className="mega-mart-wrapper">
-          <div className="mega-mart">
-            <p>Welcome to worldwide Megamart!</p>
-
-            <div className="mega-mart-actions">
-              <div className="delivery">
-                <img src={"/assets/pictures/category/icons/location.png"} alt="Location" />
-                <p>
-                  Deliver to <span>423651</span>
-                </p>
-              </div>
-
-              <div className="order">
-                <img src={"/assets/pictures/category/icons/delivery-truck.png"} alt="Delivery truck" />
-                <p>Track your order</p>
-              </div>
-
-              <div className="offers">
-                <p>All Offers</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <section className="header">
-          <div className="logo-block">
-            <div className="icon-box">
-              <img src="/assets/pictures/category/icons/open-list.png" alt="Menu" />
-            </div>
-            <h1>MegaMart</h1>
-          </div>
-
-          <div className="header-actions">
-            <div className="search-block">
-              <img className="search-icon" src="/assets/pictures/category/icons/search.png" alt="Search" />
-              <input type="text" placeholder="Search essentials, groceries and more..." />
-              <img className="suggestions" src="/assets/pictures/category/icons/list.png" alt="Suggestions" />
-            </div>
-
-            <div className="authentication">
-              <img src="/assets/pictures/category/icons/user.png" alt="User" />
-              <a href="">Sign Up/Sign In</a>
-            </div>
-
-            <div className="items-in-cart">
-              <img src="/assets/pictures/category/icons/cart.png" alt="Cart" />
-              <a href="">Cart</a>
-            </div>
-          </div>
-        </section>
-
-        <section className="categories">
-          <nav className="categories-nav">
-            {[
-              'Groceries',
-              'Premium Fruits',
-              'Home & Kitchen',
-              'Fashion',
-              'Electronics',
-              'Beauty',
-              'Home Improvement',
-              'Sports, Toys & Luggage',
-            ].map((label) => (
-              <div className="category-item" key={label}>
-                <button className="category-button">{label}</button>
-                <img className="category-arrow" src="/assets/pictures/category/icons/arrow-down.png" alt="" />
-              </div>
-            ))}
-          </nav>
-        </section>
-      </header>
-
+      <Header />
       <main>
         <section className="hero-banner-section">
           <div className="hero-banner-wrapper">
@@ -162,7 +91,7 @@ function App() {
                               <p>OFF</p>
                             </div>
 
-                            <img className="product-image" src={product.image_src} alt="" />
+                            <img src={product.image_src} alt="" />
                           </div>
 
                           <div className="product-info">
@@ -364,76 +293,7 @@ function App() {
           </div>
         </section>
       </main>
-
-      <footer className="footer-content">
-        <img className="blue-circle" src="/assets/pictures/category/circles/blue-circle.png" alt="" />
-
-        <div className="footer-columns">
-          <div className="footer-column">
-            <p className="footer-brand">MegaMart</p>
-            <h2 className="footer-title">Contact Us</h2>
-
-            <ul className="footer-contact-list">
-              <li className="footer-contact-item">
-                <img className="footer-icon" src="/assets/pictures/category/icons/whats-app-outlined.png" alt="" />
-                <div className="footer-contact-text">
-                  <p className="footer-contact-label">Whats App</p>
-                  <p className="footer-contact-value">+1 202-918-2132</p>
-                </div>
-              </li>
-
-              <li className="footer-contact-item">
-                <img className="footer-icon" src="/assets/pictures/category/icons/call.png" alt="" />
-                <div className="footer-contact-text">
-                  <p className="footer-contact-label">Call Us</p>
-                  <p className="footer-contact-value">+1 202-918-2132</p>
-                </div>
-              </li>
-            </ul>
-
-            <p className="footer-subtitle">Download App</p>
-
-            <div className="footer-app-links">
-              <a href="#" className="footer-app-link">
-                <img src="/assets/pictures/category/icons/app-store.png" alt="" />
-              </a>
-              <a href="#" className="footer-app-link">
-                <img src="/assets/pictures/category/icons/google-play.png" alt="" />
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <h2 className="footer-title">Most Popular Categories</h2>
-            <ul className="footer-list">
-              <li>Staples</li>
-              <li>Beverages</li>
-              <li>Personal Care</li>
-              <li>Home Care</li>
-              <li>Baby Care</li>
-              <li>Vegetables & Fruits</li>
-              <li>Snacks & Foods</li>
-              <li>Dairy & Bakery</li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="footer-title">Customer Services</h2>
-            <ul className="footer-list">
-              <li>About Us</li>
-              <li>Terms & Conditions</li>
-              <li>FAQ</li>
-              <li>Privacy Policy</li>
-              <li>E-waste Policy</li>
-              <li>Cancellation & Return Policy</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p>© 2022 All rights reserved. Reliance Retail Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </>
   )
 }
